@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 session_start();
 
@@ -71,4 +72,3 @@ $favourites = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <p><a href="logout.php">Logout</a></p>
 </body>
-</html>

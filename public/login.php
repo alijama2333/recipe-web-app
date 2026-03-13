@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 session_start();
 
@@ -63,4 +64,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <p><a href="register.php">Need an account? Register</a></p>
 </body>
-</html>
