@@ -38,29 +38,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login</h1>
+<?php include __DIR__ . '/includes/header.php'; ?>
 
-    <?php foreach ($errors as $error): ?>
-        <p style="color:red;"><?= htmlspecialchars($error) ?></p>
-    <?php endforeach; ?>
+<section class="auth-page">
+    <div class="auth-card">
+        <div class="auth-header">
+            <a href="index.php" class="back-link">← Back to home</a>
+            <h1>Login</h1>
+            <p>Sign in to save favourites and manage your account.</p>
+        </div>
 
-    <form method="POST" action="">
-        <label for="email">Email:</label><br>
-        <input id="email" type="email" name="email" value="<?= htmlspecialchars($email) ?>" required><br><br>
+        <?php if (!empty($errors)): ?>
+            <div class="auth-errors" role="alert">
+                <?php foreach ($errors as $error): ?>
+                    <p><?= htmlspecialchars($error) ?></p>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
-        <label for="password">Password:</label><br>
-        <input id="password" type="password" name="password" required><br><br>
+        <form method="POST" action="" class="auth-form">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value="<?= htmlspecialchars($email) ?>"
+                    required
+                >
+            </div>
 
-        <button type="submit">Login</button>
-    </form>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    required
+                >
+            </div>
 
-    <p><a href="register.php">Need an account? Register</a></p>
-</body>
-</html>
+            <button type="submit" class="primary-button auth-submit">Login</button>
+        </form>
+
+        <p class="auth-footer-text">
+            Need an account?
+            <a href="register.php" class="text-link">Register here</a>
+        </p>
+    </div>
+</section>
+
+<?php include __DIR__ . '/includes/footer.php'; ?>

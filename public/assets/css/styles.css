@@ -1,0 +1,950 @@
+/* =========================
+   Global Reset
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #f4edf8;
+    --panel: #fcfbfd;
+    --panel-soft: #faf7fc;
+    --sidebar: #efe8f4;
+
+    --accent: #d9c8e6;
+    --accent-soft: #eadff2;
+    --accent-hover: #e3d4ef;
+    --accent-dark: #6f56b3;
+
+    --text: #1d1b20;
+    --muted: #5f5b66;
+    --border: #e7deee;
+
+    --danger-bg: #fbe9e9;
+    --danger-border: #e7b8b8;
+    --danger-text: #8a1f1f;
+
+    --shadow: 0 10px 28px rgba(78, 55, 95, 0.08);
+
+    --radius-xl: 32px;
+    --radius-lg: 28px;
+    --radius-md: 24px;
+    --radius-sm: 18px;
+    --radius-xs: 12px;
+
+    --space-xs: 8px;
+    --space-sm: 12px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-xxl: 40px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+/* =========================
+   Shared Page Shell
+========================= */
+
+.site-header,
+.site-footer {
+    display: none;
+}
+
+.page-content {
+    padding: 24px;
+}
+
+.app-shell {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 18px;
+    min-height: calc(100vh - 48px);
+}
+
+.main-panel {
+    background: var(--panel);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    box-shadow: var(--shadow);
+}
+
+/* =========================
+   Sidebar
+========================= */
+
+.sidebar {
+    background: var(--sidebar);
+    border-radius: var(--radius-lg);
+    padding: 20px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.menu-button {
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--text);
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.sidebar-link {
+    display: block;
+    padding: 12px 10px;
+    text-align: center;
+    font-size: 0.95rem;
+    border-radius: 20px;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar-link.active {
+    background: var(--accent);
+    font-weight: 600;
+}
+
+.sidebar-link:hover,
+.sidebar-link:focus {
+    background: var(--accent-soft);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+/* =========================
+   Shared Typography / Layout
+========================= */
+
+.page-header h1,
+.search-page-header h1,
+.account-header h1,
+.recipe-hero-content h1 {
+    margin: 0;
+    line-height: 1.1;
+    color: var(--text);
+}
+
+.page-header h1,
+.search-page-header h1,
+.account-header h1 {
+    font-size: 3rem;
+}
+
+.homepage-section,
+.results-section,
+.account-actions-section,
+.search-toolbar,
+.favourites-summary {
+    margin-bottom: 32px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.section-heading h2 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.section-heading a,
+.results-count {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.detail-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.back-link {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.text-link {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.text-link:hover,
+.text-link:focus {
+    text-decoration: underline;
+}
+
+/* =========================
+   Shared Buttons
+========================= */
+
+.primary-button,
+.secondary-button,
+.hero-search button,
+.search-page-input-row button {
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.primary-button {
+    background: var(--accent-dark);
+    color: white;
+    padding: 14px 22px;
+}
+
+.primary-button:hover,
+.primary-button:focus {
+    background: #5f469e;
+    transform: translateY(-1px);
+    outline: none;
+}
+
+.secondary-button {
+    background: var(--accent-soft);
+    color: var(--text);
+    padding: 14px 22px;
+}
+
+.secondary-button:hover,
+.secondary-button:focus {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+.small-button {
+    padding: 10px 16px;
+    font-size: 0.95rem;
+}
+
+.icon-button {
+    border: none;
+    background: transparent;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: var(--text);
+}
+
+/* =========================
+   Shared Form Styles
+========================= */
+
+.form-group {
+    display: grid;
+    gap: 8px;
+}
+
+.form-group label,
+.filter-group label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.form-group input,
+.hero-search input,
+.search-page-input-row input,
+.filter-group select {
+    width: 100%;
+    border: none;
+    border-radius: 16px;
+    background: var(--accent-soft);
+    padding: 16px 18px;
+    font-size: 1rem;
+    color: var(--text);
+}
+
+.form-group input:focus,
+.hero-search input:focus,
+.search-page-input-row input:focus,
+.filter-group select:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* =========================
+   Homepage
+========================= */
+
+.search-section {
+    margin: 24px 0 32px;
+}
+
+.hero-search {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+}
+
+.hero-search button,
+.search-page-input-row button {
+    background: var(--accent);
+    color: var(--text);
+    padding: 16px 24px;
+    font-weight: 600;
+}
+
+.hero-search button:hover,
+.search-page-input-row button:hover,
+.hero-search button:focus,
+.search-page-input-row button:focus {
+    background: var(--accent-hover);
+    outline: none;
+}
+
+.category-row {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(90px, 1fr));
+    gap: 16px;
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.category-item:hover,
+.category-item:focus {
+    transform: translateY(-2px);
+}
+
+.category-icon {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    box-shadow: inset 0 0 0 1px var(--border);
+}
+
+.category-item span {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.popular-row {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(120px, 1fr));
+    gap: 16px;
+}
+
+.popular-card {
+    text-align: left;
+}
+
+.popular-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 20px;
+    background: var(--accent-soft);
+    margin-bottom: 10px;
+}
+
+.popular-card h3 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.3;
+}
+
+/* =========================
+   Recipe Card Component
+========================= */
+
+.recipe-card-component {
+    background: var(--panel-soft);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.recipe-card-component-image {
+    width: 100%;
+    height: 220px;
+    background: var(--accent-soft);
+}
+
+.recipe-card-component-content {
+    padding: 18px;
+}
+
+.recipe-card-component-content h3 {
+    margin: 0 0 8px;
+    font-size: 1.3rem;
+    line-height: 1.2;
+}
+
+.recipe-card-component-content p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+/* =========================
+   Search Page
+========================= */
+
+.search-page-header {
+    margin-bottom: 24px;
+}
+
+.search-page-header p {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 1rem;
+}
+
+.search-toolbar {
+    background: var(--panel-soft);
+    border-radius: var(--radius-md);
+    padding: 22px;
+}
+
+.search-page-form {
+    display: grid;
+    gap: 20px;
+}
+
+.search-page-input-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.filter-group {
+    display: grid;
+    gap: 8px;
+}
+
+.search-results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+/* =========================
+   Recipe Detail Page
+========================= */
+
+.detail-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.recipe-hero {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 28px;
+    margin-bottom: 36px;
+}
+
+.recipe-hero-image {
+    width: 100%;
+    min-height: 320px;
+    border-radius: var(--radius-lg);
+    background: var(--accent-soft);
+}
+
+.recipe-hero-content h1 {
+    margin-bottom: 12px;
+    font-size: 3rem;
+}
+
+.recipe-meta-line {
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.recipe-description {
+    margin: 0 0 18px;
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+.recipe-button-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+}
+
+.recipe-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 36px;
+}
+
+.recipe-panel {
+    background: var(--panel-soft);
+    border-radius: var(--radius-md);
+    padding: 24px;
+}
+
+.recipe-panel h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.ingredients-list,
+.method-list {
+    margin: 0;
+    padding-left: 20px;
+    line-height: 1.8;
+}
+
+.related-list {
+    display: grid;
+    gap: 18px;
+}
+
+.related-card {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 18px;
+    align-items: start;
+}
+
+.related-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 22px;
+    background: var(--accent-soft);
+}
+
+.related-content h3 {
+    margin: 0 0 8px;
+    font-size: 1.6rem;
+}
+
+.related-content p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+/* =========================
+   Favourites Page
+========================= */
+
+.favourites-summary-card {
+    background: var(--panel-soft);
+    border-radius: var(--radius-md);
+    padding: 22px 24px;
+    box-shadow: var(--shadow);
+}
+
+.favourites-summary-card h2 {
+    margin: 0 0 8px;
+    font-size: 1.3rem;
+}
+
+.favourites-count {
+    margin: 0;
+    color: var(--muted);
+    font-size: 1rem;
+}
+
+.favourites-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+/* =========================
+   Favourite Card Component
+========================= */
+
+.favourite-card-component {
+    background: var(--panel-soft);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.favourite-card-component-image {
+    width: 100%;
+    height: 220px;
+    background: var(--accent-soft);
+}
+
+.favourite-card-component-content {
+    padding: 18px;
+}
+
+.favourite-card-component-content h3 {
+    margin: 0 0 8px;
+    font-size: 1.4rem;
+    line-height: 1.2;
+}
+
+.favourite-card-component-content p {
+    margin: 0 0 16px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.favourite-card-component-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* =========================
+   Account Page
+========================= */
+
+.account-header {
+    margin-bottom: 28px;
+}
+
+.account-header p {
+    margin: 8px 0 0;
+    color: var(--muted);
+}
+
+.account-summary-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.account-card {
+    background: var(--panel-soft);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    box-shadow: var(--shadow);
+}
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.account-avatar {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    flex-shrink: 0;
+}
+
+.account-user-info h2 {
+    margin: 0 0 8px;
+    font-size: 1.6rem;
+}
+
+.account-user-info p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.stats-card h2 {
+    margin: 0 0 16px;
+    font-size: 1.3rem;
+}
+
+.account-stats {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.account-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.account-action-card {
+    background: var(--panel-soft);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.account-action-card:hover,
+.account-action-card:focus {
+    transform: translateY(-2px);
+    background: var(--accent-soft);
+    outline: none;
+}
+
+.account-action-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+}
+
+.account-action-card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.logout-card {
+    border: 1px solid var(--border);
+}
+
+/* =========================
+   Auth Pages
+========================= */
+
+.auth-page {
+    min-height: calc(100vh - 48px);
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.auth-card {
+    width: min(100%, 520px);
+    background: var(--panel);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    box-shadow: var(--shadow);
+}
+
+.auth-header {
+    margin-bottom: 24px;
+}
+
+.auth-header h1 {
+    margin: 12px 0 8px;
+    font-size: 2.4rem;
+    line-height: 1.1;
+}
+
+.auth-header p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.auth-errors {
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    color: var(--danger-text);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-bottom: 20px;
+}
+
+.auth-errors p {
+    margin: 0 0 6px;
+}
+
+.auth-errors p:last-child {
+    margin-bottom: 0;
+}
+
+.auth-form {
+    display: grid;
+    gap: 18px;
+}
+
+.auth-submit {
+    margin-top: 8px;
+    width: 100%;
+    justify-self: stretch;
+}
+
+.auth-footer-text {
+    margin: 20px 0 0;
+    color: var(--muted);
+    text-align: center;
+}
+
+/* =========================
+   Accessibility Helpers
+========================= */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 1100px) {
+    .category-row {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .popular-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .filter-grid {
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .recipe-hero {
+        grid-template-columns: 1fr;
+    }
+
+    .recipe-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .related-card {
+        grid-template-columns: 1fr;
+    }
+
+    .account-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .account-actions-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-content {
+        padding: 16px;
+    }
+
+    .app-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 14px;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .main-panel,
+    .auth-card {
+        padding: 24px;
+    }
+
+    .page-header h1,
+    .search-page-header h1,
+    .account-header h1,
+    .recipe-hero-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-search,
+    .search-page-input-row,
+    .featured-grid,
+    .search-results-grid,
+    .favourites-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .category-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .popular-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .profile-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
