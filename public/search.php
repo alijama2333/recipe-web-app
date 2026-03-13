@@ -1,23 +1,32 @@
 <?php include __DIR__ . '/includes/header.php'; ?>
 
 <?php
-$recipes = [
-    ['id' => 1, 'title' => 'Spaghetti Bolognese', 'meta' => 'Main · Meat · 35 mins · 4.5 stars'],
-    ['id' => 2, 'title' => 'Vegan Pancakes', 'meta' => 'Breakfast · Vegan · 20 mins · 4.7 stars'],
-    ['id' => 3, 'title' => 'Healthy Pizza', 'meta' => 'Main · Vegetarian · 30 mins · 4.3 stars'],
-    ['id' => 4, 'title' => 'Easy Lamb Biryani', 'meta' => 'Main · Meat · 45 mins · 4.6 stars'],
-    ['id' => 5, 'title' => 'Couscous Salad', 'meta' => 'Healthy · Vegetarian · 15 mins · 4.4 stars'],
-    ['id' => 6, 'title' => 'Mango Pie', 'meta' => 'Dessert · Vegetarian · 50 mins · 4.2 stars'],
-];
-
-include "db.php";
-
-$Link=mysql_connect($host, $username, $password);
+include "../includes/db.php";
 
 //Insert PHP statements to manage the database
+$q = $_GET['q'] ?? '';
+$category = $_GET['category'] ?? '';
+$time = $_GET['time'] ?? '';
+$diet = $_GET['diet'] ?? '';
+$sort = $_GET['sort'] ?? 'rating';
 
-my_sql_close($Link);
+$query = "SELECT * FROM recipes WHERE 1=1";
+$params = [];
 
+if ($q !== '') {
+    $query .= " AND title LIKE :q";
+    $params['q'] = "%$q%";
+}
+
+if ($time === '30') {
+    $query .= " AND recipes.total_time <= 30";
+}elseif($time === '31'){
+    $query .= " AND recipes.total_time > 30";    
+}
+
+$stmt = $pdo->prepare($query);
+$stmt->execute($params);
+$recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="app-shell">
