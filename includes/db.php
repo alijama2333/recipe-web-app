@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 $host = 'localhost';
 $dbname = 'recipe_app';
@@ -10,4 +11,3 @@ try {
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
 }
-?>
