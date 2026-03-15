@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 $host = 'localhost';
 $dbname = 'recipe_app';
