@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 
 function is_logged_in(): bool
@@ -22,3 +21,4 @@ function current_user_id(): ?int
 function current_user_name(): ?string
 {
     return $_SESSION['user_name'] ?? null;
+}
