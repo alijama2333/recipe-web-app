@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <?php
 $host = 'localhost';
 $dbname = 'recipe_app';
@@ -10,4 +10,4 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
-}
+};

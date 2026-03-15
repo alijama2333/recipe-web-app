@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 
 function clean_input(string $value): string
@@ -62,3 +61,4 @@ function validate_rating($rating): ?string
     }
 
     return null;
+}
