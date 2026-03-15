@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <?php
 
 function clean_input(string $value): string
