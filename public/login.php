@@ -40,15 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login</h1>
 
+<<<<<<< HEAD
     <?php foreach ($errors as $error): ?>
         <p style="color:red;"><?= htmlspecialchars($error) ?></p>
     <?php endforeach; ?>
@@ -66,3 +59,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p><a href="register.php">Need an account? Register</a></p>
 </body>
 </html>
+=======
+<?php include __DIR__ . '/includes/header.php'; ?>
+
+<section class="auth-page">
+    <div class="auth-card">
+        <div class="auth-header">
+            <a href="index.php" class="back-link">← Back to home</a>
+            <h1>Login</h1>
+            <p>Sign in to save favourites and manage your account.</p>
+        </div>
+
+        <?php if (!empty($errors)): ?>
+            <div class="auth-errors" role="alert">
+                <?php foreach ($errors as $error): ?>
+                    <p><?= htmlspecialchars($error) ?></p>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
+        <form method="POST" action="" class="auth-form">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value="<?= htmlspecialchars($email) ?>"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="primary-button auth-submit">Login</button>
+        </form>
+
+        <p class="auth-footer-text">
+            Need an account?
+            <a href="register.php" class="text-link">Register here</a>
+        </p>
+    </div>
+</section>
+
+<?php include __DIR__ . '/includes/footer.php'; ?>
+>>>>>>> 0e9332d3cb821a34ed466083b9e108a5db6f09bf

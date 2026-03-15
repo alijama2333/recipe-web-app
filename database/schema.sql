@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0e9332d3cb821a34ed466083b9e108a5db6f09bf
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -35,4 +38,8 @@ CREATE TABLE ratings (
     UNIQUE(user_id, recipe_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (recipe_id) REFERENCES recipes(id) ON DELETE CASCADE
+<<<<<<< HEAD
 );
+=======
+);
+>>>>>>> 0e9332d3cb821a34ed466083b9e108a5db6f09bf

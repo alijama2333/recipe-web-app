@@ -1,7 +1,11 @@
 <?php
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 0e9332d3cb821a34ed466083b9e108a5db6f09bf
 
 require_once '../includes/db.php';
 require_once '../includes/validation.php';
@@ -53,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,3 +90,84 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p><a href="login.php">Already have an account? Login</a></p>
 </body>
 </html>
+=======
+
+<?php include __DIR__ . '/includes/header.php'; ?>
+
+<section class="auth-page">
+    <div class="auth-card">
+
+        <div class="auth-header">
+            <a href="index.php" class="back-link">← Back to home</a>
+            <h1>Create Account</h1>
+            <p>Register to save favourite recipes and track your cooking.</p>
+        </div>
+
+        <?php if (!empty($errors)): ?>
+            <div class="auth-errors" role="alert">
+                <?php foreach ($errors as $error): ?>
+                    <p><?= htmlspecialchars($error) ?></p>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
+        <form method="POST" action="" class="auth-form">
+
+            <div class="form-group">
+                <label for="name">Full name</label>
+                <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    value="<?= htmlspecialchars($name) ?>"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value="<?= htmlspecialchars($email) ?>"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm password</label>
+                <input
+                    id="confirm_password"
+                    type="password"
+                    name="confirm_password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="primary-button auth-submit">
+                Create account
+            </button>
+
+        </form>
+
+        <p class="auth-footer-text">
+            Already have an account?
+            <a href="login.php" class="text-link">Login here</a>
+        </p>
+
+    </div>
+</section>
+
+<?php include __DIR__ . '/includes/footer.php'; ?>
+>>>>>>> 0e9332d3cb821a34ed466083b9e108a5db6f09bf
