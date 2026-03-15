@@ -19,9 +19,9 @@ if ($q !== '') {
 }
 
 if ($time === '30') {
-    $query .= " AND recipes.total_time <= 30";
+    $query .= " AND total_time <= 30";
 }elseif($time === '31'){
-    $query .= " AND recipes.total_time > 30";    
+    $query .= " AND total_time > 30";    
 }
 
 $stmt = $pdo->prepare($query);
