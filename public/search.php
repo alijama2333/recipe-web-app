@@ -6,9 +6,13 @@ include "../includes/db.php";
 //Insert PHP statements to manage the database
 $q = $_GET['q'] ?? '';
 $food_category = $_GET['food_category'] ?? '';
-$time = $_GET['time'] ?? '';
+$cook_time = $_GET['cook_time'] ?? '';
+$cook_time_int = (int) $cook_time;
+$prep_time = $_GET['prep_time'] ?? '';
+$prep_time_int = (int) $prep_time;
 $diet = $_GET['diet'] ?? '';
 $sort = $_GET['sort'] ?? 'rating';
+$total_time = $cook_time_int + $prep_time_int
 
 $query = "SELECT DISTINCT recipes.*, AVG(ratings.rating) AS avg_rating
 FROM recipes 
@@ -23,9 +27,9 @@ if ($q !== '') {
     $params['q'] = "%$q%";
 }
 
-if ($time === '30') {
+if ($total_time === '30') {
     $query .= " AND cook_time <= 30";
-}elseif($time === '31'){
+}elseif($total_time === '31'){
     $query .= " AND cook_time > 30";    
 }
 
