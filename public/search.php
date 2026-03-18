@@ -116,7 +116,7 @@ $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php foreach ($recipes as $recipe): ?>
                     <?php
                     $recipeId = $recipe['id'];
-                    $recipeTitle = $recipe['title'];
+                    $recipeTitle = $recipe['recipe_name'];
                     $recipeMeta = $recipe['meta'];
                     $cardClass = '';
                     include __DIR__ . '/includes/recipe-card.php';
