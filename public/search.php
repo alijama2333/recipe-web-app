@@ -14,7 +14,7 @@ $query = "SELECT * FROM recipes WHERE 1=1";
 $params = [];
 
 if ($q !== '') {
-    $query .= " AND title LIKE :q";
+    $query .= " AND recipe_name LIKE :q";
     $params['q'] = "%$q%";
 }
 
@@ -24,13 +24,14 @@ if ($time === '30') {
     $query .= " AND total_time > 30";    
 }
 
-if($diet ==  ){
+// if($diet ==  ){
 
-}
+// }
 
 $stmt = $pdo->prepare($query);
 $stmt->execute($params);
 $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <div class="app-shell">
