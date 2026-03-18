@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 require_once '../includes/db.php';
 require_once '../includes/validation.php';
@@ -39,6 +41,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+<<<<<<< HEAD
+    <?php foreach ($errors as $error): ?>
+        <p style="color:red;"><?= htmlspecialchars($error) ?></p>
+    <?php endforeach; ?>
+
+    <form method="POST" action="">
+        <label for="email">Email:</label><br>
+        <input id="email" type="email" name="email" value="<?= htmlspecialchars($email) ?>" required><br><br>
+
+        <label for="password">Password:</label><br>
+        <input id="password" type="password" name="password" required><br><br>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p><a href="register.php">Need an account? Register</a></p>
+</body>
+</html>
+=======
 <?php include __DIR__ . '/includes/header.php'; ?>
 
 <section class="auth-page">
@@ -90,3 +111,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </section>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
+>>>>>>> 0e9332d3cb821a34ed466083b9e108a5db6f09bf
