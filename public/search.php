@@ -92,13 +92,14 @@ $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <label for="food_category">Category</label>
                         <select id="food_category" name="food_category">
                             <option value="">All</option>
-                            <option value="Vegetarian">Vegetarian</option>
-                            <option value="Meat">Meat</option>
-                            <option value="Pasta">Pasta</option>
-                            <option value="Breakfast">Breakfast</option>
-                            <option value="Dessert">Dessert</option>
-                            <option value="Healthy">Healthy</option>
-                            <option value="Quick Meals">Quick Meals</option>
+                            <option value="vegetarian">Vegetarian</option>
+                            <option value="meat">Meat</option>
+                            <option value="pasta">Pasta</option>
+                            <option value="breakfast">Breakfast</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="quick-meals">Quick Meals</option>
+                            <option value="meat/vegetarian">Meat/Vegetarian</option>
+                            <option value="vegan/vegetarian"> Vegan/Vegetartian</option>
                         </select>
                     </div>
 
@@ -118,8 +119,9 @@ $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <option value="vegan">Vegan</option>
                             <option value="vegetarian">Vegetarian</option>
                             <option value="meat">Meat</option>
+                            <option value="gluten free">Gluten Free</option>
                             <option value="nut free"> Nut Free </option>
-                            <option value="pregnancy friendly"> Pregnancy Friendly </option>
+                            <option value="pregnancy-friendly"> Pregnancy Friendly </option>
                             <option value="healthy"> Healthy </option>
                         </select>
                     </div>
