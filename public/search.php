@@ -24,6 +24,10 @@ if ($time === '30') {
     $query .= " AND total_time > 30";    
 }
 
+if($diet ==  ){
+
+}
+
 $stmt = $pdo->prepare($query);
 $stmt->execute($params);
 $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
