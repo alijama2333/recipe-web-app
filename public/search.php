@@ -5,14 +5,15 @@ include "../includes/db.php";
 
 //Insert PHP statements to manage the database
 $q = $_GET['q'] ?? '';
-$food_category = $_GET['category'] ?? '';
+$food_category = $_GET['food_category'] ?? '';
 $time = $_GET['time'] ?? '';
 $diet = $_GET['diet'] ?? '';
 $sort = $_GET['sort'] ?? 'rating';
 
-$query = "SELECT DISTINCT recipes.*
+$query = "SELECT DISTINCT recipes.*, AVG(ratings.rating) AS avg_rating
 FROM recipes 
 LEFT JOIN diet ON recipes.recipe_id = diet.recipe_id
+LEFT JOIN ratings ON recipes.recipe_id = ratings.recipe_id
 WHERE 1=1";
 
 $params = [];
@@ -32,6 +33,27 @@ if($diet !== '' ){
     $query .= " AND diet.d_val LIKE :diet";
     $params['diet'] = "%$diet%";
 }
+
+if($food_category !== ''){
+    $query .= " AND recipes.food_category LIKE :food_category";
+    $params['food_category'] = "%$food_category%";
+}
+
+//GROUP BY to sort by avg_rating
+$query .= " GROUP BY recipes.recipe_id";
+
+switch($sort){
+    case 'time':
+        $query .= " ORDER BY recipes.cook_time ASC";
+        break;
+    case 'az':
+        $query .= " ORDER BY recipes.recipe_name ASC";
+        break;
+    default:
+        $query .= " ORDER BY avg_rating DESC";
+        break;
+}
+
 
 $stmt = $pdo->prepare($query);
 $stmt->execute($params);
@@ -67,8 +89,8 @@ $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="filter-grid">
                     <div class="filter-group">
-                        <label for="category">Category</label>
-                        <select id="category" name="category">
+                        <label for="food_category">Category</label>
+                        <select id="food_category" name="food_category">
                             <option value="">All</option>
                             <option value="Vegetarian">Vegetarian</option>
                             <option value="Meat">Meat</option>
@@ -123,7 +145,7 @@ $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="search-results-grid">
                 <?php foreach ($recipes as $recipe): ?>
                     <?php
-                    $recipeId = $recipe['id'];
+                    $recipeId = $recipe['recipe_id'];
                     $recipeTitle = $recipe['recipe_name'];
                     $recipeMeta = $recipe['meta'];
                     $cardClass = '';
