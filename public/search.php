@@ -5,16 +5,20 @@ include "../includes/db.php";
 
 //Insert PHP statements to manage the database
 $q = $_GET['q'] ?? '';
-$category = $_GET['category'] ?? '';
+$food_category = $_GET['category'] ?? '';
 $time = $_GET['time'] ?? '';
 $diet = $_GET['diet'] ?? '';
 $sort = $_GET['sort'] ?? 'rating';
 
-$query = "SELECT * FROM recipes WHERE 1=1";
+$query = "SELECT DISTINCT recipes.*
+FROM recipes 
+LEFT JOIN diet ON recipes.recipe_id = diet.recipe_id
+WHERE 1=1";
+
 $params = [];
 
 if ($q !== '') {
-    $query .= " AND recipe_name LIKE :q";
+    $query .= " AND recipes.recipe_name LIKE :q";
     $params['q'] = "%$q%";
 }
 
@@ -24,9 +28,10 @@ if ($time === '30') {
     $query .= " AND cook_time > 30";    
 }
 
-// if($diet ==  ){
-
-// }
+if($diet !== '' ){
+    $query .= " AND diet.d_val LIKE :diet";
+    $params['diet'] = "%$diet%";
+}
 
 $stmt = $pdo->prepare($query);
 $stmt->execute($params);
@@ -88,9 +93,12 @@ $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <label for="diet">Dietary Type</label>
                         <select id="diet" name="diet">
                             <option value="">All</option>
-                            <option value="Vegan">Vegan</option>
-                            <option value="Vegetarian">Vegetarian</option>
-                            <option value="Meat">Meat</option>
+                            <option value="vegan">Vegan</option>
+                            <option value="vegetarian">Vegetarian</option>
+                            <option value="meat">Meat</option>
+                            <option value="nut free"> Nut Free </option>
+                            <option value="pregnancy friendly"> Pregnancy Friendly </option>
+                            <option value="healthy"> Healthy </option>
                         </select>
                     </div>
 
