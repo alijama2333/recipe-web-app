@@ -147,7 +147,7 @@ $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php
                     $recipeId = $recipe['recipe_id'];
                     $recipeTitle = $recipe['recipe_name'];
-                    $recipeMeta = $recipe['meta'];
+                    // $recipeMeta = $recipe['meta'];
                     $cardClass = '';
                     include __DIR__ . '/includes/recipe-card.php';
                     ?>
