@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 0e9332d3cb821a34ed466083b9e108a5db6f09bf
 <?php
 $host = 'localhost';
 $dbname = 'recipe_app';

@@ -1,11 +1,5 @@
 <?php
-<<<<<<< HEAD
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-=======
 session_start();
->>>>>>> 0e9332d3cb821a34ed466083b9e108a5db6f09bf
 
 require_once '../includes/db.php';
 require_once '../includes/validation.php';
@@ -57,40 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
-    <h1>Register</h1>
-
-    <?php foreach ($errors as $error): ?>
-        <p style="color:red;"><?= htmlspecialchars($error) ?></p>
-    <?php endforeach; ?>
-
-    <form method="POST" action="">
-        <label for="name">Name:</label><br>
-        <input id="name" type="text" name="name" value="<?= htmlspecialchars($name) ?>" required><br><br>
-
-        <label for="email">Email:</label><br>
-        <input id="email" type="email" name="email" value="<?= htmlspecialchars($email) ?>" required><br><br>
-
-        <label for="password">Password:</label><br>
-        <input id="password" type="password" name="password" required><br><br>
-
-        <label for="confirm_password">Confirm Password:</label><br>
-        <input id="confirm_password" type="password" name="confirm_password" required><br><br>
-
-        <button type="submit">Register</button>
-    </form>
-
-    <p><a href="login.php">Already have an account? Login</a></p>
-</body>
-</html>
-=======
 
 <?php include __DIR__ . '/includes/header.php'; ?>
 
@@ -170,4 +130,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </section>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
->>>>>>> 0e9332d3cb821a34ed466083b9e108a5db6f09bf
