@@ -24,9 +24,9 @@ if ($q !== '') {
 }
 
 if ($time === '30') {
-    $query .= " AND cook_time <= 30";
+    $query .= " AND total_time <= 30";
 }elseif($time === '31'){
-    $query .= " AND cook_time > 30";    
+    $query .= " AND total_time > 30";    
 }
 
 if($diet !== '' ){
