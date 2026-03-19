@@ -183,7 +183,7 @@ $insert_statements = [
 
     // 1. recipes
     "INSERT INTO recipes
-    (recipe_name, course, food_category, prep_time, cook_time, serves, image_path, author, date_added)
+    (recipe_name, course, food_category, prep_time, cook_time, total_time, serves, image_path, author, date_added)
     VALUES
     ('Tomatoes','Main','meat/vegatarian','less than 30 mins','1-2 hours',80,8,'relative path','Jo Pratt','2026-03-01'),
     ('Easy Lamb Biryani','Main','meat','over night','1-2 hours',420,6,'relative path','Sunil Vijayakar','2026-03-02'),
