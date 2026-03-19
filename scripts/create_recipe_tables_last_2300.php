@@ -38,6 +38,7 @@ $sql_statements = [
         `food_category` VARCHAR(100) NOT NULL,
         `prep_time` VARCHAR(100) NOT NULL,
         `cook_time` VARCHAR(100) NOT NULL,
+        `total_time` INT NOT NULL,
         `serves` INT NOT NULL,
         `image_path` VARCHAR(255) DEFAULT NULL,
         `author` VARCHAR(255) NOT NULL,
@@ -184,14 +185,14 @@ $insert_statements = [
     "INSERT INTO recipes
     (recipe_name, course, food_category, prep_time, cook_time, serves, image_path, author, date_added)
     VALUES
-    ('Tomatoes','Main','meat/vegatarian','less than 30 mins','1-2 hours',8,'relative path','Jo Pratt','2026-03-01'),
-    ('Easy Lamb Biryani','Main','meat','over night','1-2 hours',6,'relative path','Sunil Vijayakar','2026-03-02'),
-    ('Healthy Pizza','Main','vegetarian','less than 30 mins','10-30 minutes',2,'relative path','Justine Pattison','2026-03-03'),
-    ('Mushroom Doner','Main','vegetarian','less than 30 mins','10-30 minutes',4,'relative path','Sabrina Ghayour','2026-03-04'),
-    ('Couscous Salad','Salad','vegan/vegetarian','less than 30 mins','Less than 10 minutes',6,'relative path','Nargisse Benkabbou','2026-03-05'),
-    ('Vegan Pancakes','Dessert','vegan/vegetarian','less than 30 mins','10-30 minutes',2,'relative path','Justine Pattison','2026-03-06'),
-    ('Plum Clafoutis','Dessert','vegetarian','less than 30 mins','30 minutes to 1 hour',4,'relative path','James Martin','2026-03-07'),
-    ('Mango Pie','Dessert','vegetarian','30 minutes to 1 hour','30 minutes to 1 hour',16,'relative path','Samin Nosrat','2026-03-08')",
+    ('Tomatoes','Main','meat/vegatarian','less than 30 mins','1-2 hours',80,8,'relative path','Jo Pratt','2026-03-01'),
+    ('Easy Lamb Biryani','Main','meat','over night','1-2 hours',420,6,'relative path','Sunil Vijayakar','2026-03-02'),
+    ('Healthy Pizza','Main','vegetarian','less than 30 mins','10-30 minutes',25,2,'relative path','Justine Pattison','2026-03-03'),
+    ('Mushroom Doner','Main','vegetarian','less than 30 mins','10-30 minutes',25,4,'relative path','Sabrina Ghayour','2026-03-04'),
+    ('Couscous Salad','Salad','vegan/vegetarian','less than 30 mins','Less than 10 minutes',20,6,'relative path','Nargisse Benkabbou','2026-03-05'),
+    ('Vegan Pancakes','Dessert','vegan/vegetarian','less than 30 mins','10-30 minutes',25,2,'relative path','Justine Pattison','2026-03-06'),
+    ('Plum Clafoutis','Dessert','vegetarian','less than 30 mins','30 minutes to 1 hour',45,4,'relative path','James Martin','2026-03-07'),
+    ('Mango Pie','Dessert','vegetarian','30 minutes to 1 hour','30 minutes to 1 hour',60,16,'relative path','Samin Nosrat','2026-03-08')",
 
     // 2. diet
     "INSERT INTO diet (recipe_id, d_val) VALUES
