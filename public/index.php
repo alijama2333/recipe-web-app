@@ -30,13 +30,13 @@ $stmt->execute();
 $popularRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $categories = [
-    ['label' => 'Vegetarian', 'value' => 'vegetarian'],
-    ['label' => 'Meat', 'value' => 'meat'],
-    ['label' => 'Pasta', 'value' => 'pasta'],
-    ['label' => 'Breakfast', 'value' => 'breakfast'],
-    ['label' => 'Dessert', 'value' => 'dessert'],
-    ['label' => 'Quick Meals', 'value' => 'quick-meals'],
-    ['label' => 'Vegan/Vegetarian', 'value' => 'vegan/vegetarian']
+    ['label' => 'Vegetarian', 'value' => 'vegetarian', 'icon' => '🥦'],
+    ['label' => 'Meat', 'value' => 'meat', 'icon' => '🍗'],
+    ['label' => 'Pasta', 'value' => 'pasta', 'icon' => '🍝'],
+    ['label' => 'Breakfast', 'value' => 'breakfast', 'icon' => '🍳'],
+    ['label' => 'Dessert', 'value' => 'dessert', 'icon' => '🍰'],
+    ['label' => 'Quick Meals', 'value' => 'quick-meals', 'icon' => '⚡'],
+    ['label' => 'Vegan/Vegetarian', 'value' => 'vegan/vegetarian', 'icon' => '🥗']
 ];
 ?>
 
@@ -46,6 +46,9 @@ $categories = [
     <section class="main-panel">
         <div class="page-header">
             <h1>Recipe Finder</h1>
+            <p class="homepage-intro">
+                Discover simple, tasty recipes and explore meals by category, dietary need, and cooking time.
+            </p>
         </div>
 
         <section class="search-section">
@@ -70,7 +73,9 @@ $categories = [
             <div class="category-row">
                 <?php foreach ($categories as $category): ?>
                     <a href="search.php?food_category=<?= urlencode($category['value']) ?>" class="category-item">
-                        <div class="category-icon"></div>
+                        <div class="category-icon">
+                            <span><?= htmlspecialchars($category['icon']) ?></span>
+                        </div>
                         <span><?= htmlspecialchars($category['label']) ?></span>
                     </a>
                 <?php endforeach; ?>
@@ -130,6 +135,19 @@ $categories = [
             <?php else: ?>
                 <div class="popular-row">
                     <?php foreach ($popularRecipes as $recipe): ?>
+                        <?php
+                        $popularMetaParts = [];
+
+                        if (!empty($recipe['food_category'])) {
+                            $popularMetaParts[] = $recipe['food_category'];
+                        }
+
+                        if (!empty($recipe['total_time'])) {
+                            $popularMetaParts[] = $recipe['total_time'] . ' mins';
+                        }
+
+                        $popularMeta = implode(' · ', $popularMetaParts);
+                        ?>
                         <article class="popular-card">
                             <div
                                 class="popular-image"
@@ -137,11 +155,16 @@ $categories = [
                                     style="background-image: url('<?= htmlspecialchars($recipe['image_path']) ?>'); background-size: cover; background-position: center;"
                                 <?php endif; ?>
                             ></div>
+
                             <h3>
                                 <a href="recipe.php?id=<?= urlencode($recipe['recipe_id']) ?>">
                                     <?= htmlspecialchars($recipe['recipe_name']) ?>
                                 </a>
                             </h3>
+
+                            <?php if (!empty($popularMeta)): ?>
+                                <p class="popular-meta"><?= htmlspecialchars($popularMeta) ?></p>
+                            <?php endif; ?>
                         </article>
                     <?php endforeach; ?>
                 </div>

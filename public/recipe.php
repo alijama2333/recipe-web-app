@@ -165,7 +165,7 @@ $recipeMeta = implode(' · ', $metaParts);
                         </form>
                     <?php endif; ?>
 
-                    <a href="#method" class="secondary-button">Start cooking</a>
+                    <a href="#method" class="secondary-button">Jump to method</a>
                 </div>
             </div>
         </section>
