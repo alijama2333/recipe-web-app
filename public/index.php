@@ -70,16 +70,16 @@ $categories = [
                 <a href="search.php">View all →</a>
             </div>
 
-            <div class="category-row">
-                <?php foreach ($categories as $category): ?>
-                    <a href="search.php?food_category=<?= urlencode($category['value']) ?>" class="category-item">
-                        <div class="category-icon">
-                            <span><?= htmlspecialchars($category['icon']) ?></span>
-                        </div>
-                        <span><?= htmlspecialchars($category['label']) ?></span>
-                    </a>
-                <?php endforeach; ?>
-            </div>
+        <div class="category-row">
+            <?php foreach ($categories as $category): ?>
+                <a href="search.php?food_category=<?= urlencode($category['value']) ?>" class="category-item">
+                    <div class="category-icon">
+                        <span class="category-emoji"><?= htmlspecialchars($category['icon']) ?></span>
+                    </div>
+                    <span class="category-label"><?= htmlspecialchars($category['label']) ?></span>
+                </a>
+            <?php endforeach; ?>
+        </div>
         </section>
 
         <section class="homepage-section">
