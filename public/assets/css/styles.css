@@ -350,53 +350,6 @@ textarea {
     outline: none;
 }
 
-.category-row {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(100px, 1fr));
-    gap: 20px;
-}
-
-.category-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    text-align: center;
-    padding: 10px;
-    border-radius: 20px;
-    transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.category-item:hover,
-.category-item:focus {
-    transform: translateY(-2px);
-    background: var(--panel-soft);
-}
-
-.category-icon {
-    width: 92px;
-    height: 92px;
-    border-radius: 50%;
-    background: var(--accent-soft);
-    box-shadow: inset 0 0 0 1px var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.category-item:hover .category-icon,
-.category-item:focus .category-icon {
-    background: var(--accent);
-    transform: scale(1.04);
-}
-
-.category-item span {
-    font-size: 0.95rem;
-    font-weight: 600;
-}
-
 .featured-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(260px, 1fr));
@@ -435,6 +388,65 @@ textarea {
     font-size: 0.92rem;
     color: var(--muted);
     line-height: 1.4;
+}
+
+/* =========================
+   Category Section
+========================= */
+
+.category-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 20px;
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+    padding: 14px 10px;
+    border-radius: 22px;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category-item:hover,
+.category-item:focus {
+    transform: translateY(-3px);
+    background: var(--panel-soft);
+    box-shadow: var(--shadow);
+    outline: none;
+}
+
+.category-icon {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    box-shadow: inset 0 0 0 1px var(--border);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 30px;
+    line-height: 1;
+
+    transition: all 0.2s ease;
+}
+
+.category-item:hover .category-icon,
+.category-item:focus .category-icon {
+    background: var(--accent);
+    transform: scale(1.08);
+}
+
+.category-item span {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.2;
 }
 
 /* =========================
