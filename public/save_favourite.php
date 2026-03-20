@@ -18,7 +18,7 @@ if (!$recipe_id || !is_numeric($recipe_id)) {
 
 $recipe_id = (int)$recipe_id;
 
-$stmt = $pdo->prepare("SELECT id FROM recipes WHERE id = ?");
+$stmt = $pdo->prepare("SELECT recipe_id FROM recipes WHERE recipe_id = ?");
 $stmt->execute([$recipe_id]);
 
 if (!$stmt->fetch()) {
@@ -28,5 +28,5 @@ if (!$stmt->fetch()) {
 $stmt = $pdo->prepare("INSERT IGNORE INTO favourites (user_id, recipe_id) VALUES (?, ?)");
 $stmt->execute([current_user_id(), $recipe_id]);
 
-header('Location: account.php');
+header('Location: recipe.php?id=' . $recipe_id);
 exit;

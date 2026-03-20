@@ -1,3 +1,117 @@
+<?php
+session_start();
+
+require_once '../includes/db.php';
+require_once '../includes/auth.php';
+
+$recipeId = $_GET['id'] ?? null;
+
+if (!$recipeId || !is_numeric($recipeId)) {
+    die('Invalid recipe ID.');
+}
+
+$recipeId = (int)$recipeId;
+
+/* Main recipe + average rating */
+$stmt = $pdo->prepare("
+    SELECT r.*, AVG(rt.rating) AS avg_rating
+    FROM recipes r
+    LEFT JOIN ratings rt ON r.recipe_id = rt.recipe_id
+    WHERE r.recipe_id = ?
+    GROUP BY r.recipe_id
+");
+$stmt->execute([$recipeId]);
+$recipe = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$recipe) {
+    die('Recipe not found.');
+}
+
+/* Diet tags */
+$stmt = $pdo->prepare("
+    SELECT d_val
+    FROM diet
+    WHERE recipe_id = ?
+");
+$stmt->execute([$recipeId]);
+$diets = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+/* Ingredients + measurements */
+$stmt = $pdo->prepare("
+    SELECT i.ingredient, i.qty, m.meas_met
+    FROM ingredients i
+    LEFT JOIN measurements m ON i.measurement_id = m.measurement_id
+    WHERE i.recipe_id = ?
+    ORDER BY i.ingredient_id ASC
+");
+$stmt->execute([$recipeId]);
+$ingredients = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+/* Method steps */
+$stmt = $pdo->prepare("
+    SELECT step, method
+    FROM methods
+    WHERE recipe_id = ?
+    ORDER BY step ASC
+");
+$stmt->execute([$recipeId]);
+$methods = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+/* Tips */
+$stmt = $pdo->prepare("
+    SELECT tip_text
+    FROM tips
+    WHERE recipe_id = ?
+    ORDER BY tip_id ASC
+");
+$stmt->execute([$recipeId]);
+$tips = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+/* Similar recipes */
+$stmt = $pdo->prepare("
+    SELECT recipe_id, recipe_name, food_category, total_time, image_path
+    FROM recipes
+    WHERE recipe_id != ?
+      AND course = ?
+    ORDER BY total_time ASC
+    LIMIT 2
+");
+$stmt->execute([$recipeId, $recipe['course']]);
+$similarRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$metaParts = [];
+
+if (!empty($recipe['course'])) {
+    $metaParts[] = $recipe['course'];
+}
+
+if (!empty($recipe['food_category'])) {
+    $metaParts[] = $recipe['food_category'];
+}
+
+if (!empty($diets)) {
+    $metaParts[] = implode(', ', $diets);
+}
+
+if (!empty($recipe['prep_time'])) {
+    $metaParts[] = $recipe['prep_time'] . ' prep';
+}
+
+if (!empty($recipe['cook_time'])) {
+    $metaParts[] = $recipe['cook_time'] . ' cook';
+}
+
+if (!empty($recipe['total_time'])) {
+    $metaParts[] = $recipe['total_time'] . ' mins total';
+}
+
+if (!empty($recipe['avg_rating'])) {
+    $metaParts[] = number_format((float)$recipe['avg_rating'], 1) . '★';
+}
+
+$recipeMeta = implode(' · ', $metaParts);
+?>
+
 <?php include __DIR__ . '/includes/header.php'; ?>
 
 <div class="app-shell">
@@ -8,31 +122,50 @@
             <a href="search.php" class="back-link">← Back to recipes</a>
 
             <div class="detail-actions">
-                <button class="icon-button" type="button" aria-label="Save recipe">♡</button>
+                <?php if (!empty($_SESSION['user_id'])): ?>
+                    <form method="POST" action="save_favourite.php" style="display:inline;">
+                        <input type="hidden" name="recipe_id" value="<?= (int)$recipe['recipe_id'] ?>">
+                        <button class="icon-button" type="submit" aria-label="Save recipe">♡</button>
+                    </form>
+                <?php endif; ?>
+
                 <button class="icon-button" type="button" aria-label="More options">⋮</button>
             </div>
         </div>
 
         <section class="recipe-hero">
-            <div class="recipe-hero-image"></div>
+            <div
+                class="recipe-hero-image"
+                <?php if (!empty($recipe['image_path'])): ?>
+                    style="background-image: url('<?= htmlspecialchars($recipe['image_path']) ?>'); background-size: cover; background-position: center;"
+                <?php endif; ?>
+            ></div>
 
             <div class="recipe-hero-content">
-                <h1>Spaghetti Bolognese</h1>
+                <h1><?= htmlspecialchars($recipe['recipe_name']) ?></h1>
 
-                <p class="recipe-meta-line">Main · Meat · 15 min prep · 20 min cook · 4.5 stars</p>
-
-                <p class="recipe-description">
-                    A hearty and comforting pasta dish with rich tomato sauce, minced beef, and classic Italian-inspired flavour.
-                    This recipe is ideal for a family dinner and can be prepared using simple ingredients.
-                </p>
+                <p class="recipe-meta-line"><?= htmlspecialchars($recipeMeta) ?></p>
 
                 <p class="recipe-description">
-                    You can serve it with grated cheese and a side salad. It also works well for meal prep and can be stored for later.
+                    Created by <?= htmlspecialchars($recipe['author']) ?>.
+                    Serves <?= (int)$recipe['serves'] ?>.
                 </p>
+
+                <?php if (!empty($tips)): ?>
+                    <p class="recipe-description">
+                        Includes <?= count($tips) ?> cooking tip<?= count($tips) === 1 ? '' : 's' ?> below.
+                    </p>
+                <?php endif; ?>
 
                 <div class="recipe-button-row">
-                    <button class="primary-button" type="button">Save to favourites</button>
-                    <button class="secondary-button" type="button">Start cooking</button>
+                    <?php if (!empty($_SESSION['user_id'])): ?>
+                        <form method="POST" action="save_favourite.php">
+                            <input type="hidden" name="recipe_id" value="<?= (int)$recipe['recipe_id'] ?>">
+                            <button class="primary-button" type="submit">Save to favourites</button>
+                        </form>
+                    <?php endif; ?>
+
+                    <a href="#method" class="secondary-button">Start cooking</a>
                 </div>
             </div>
         </section>
@@ -40,29 +173,56 @@
         <section class="recipe-content-grid">
             <div class="recipe-panel">
                 <h2>Ingredients</h2>
-                <ul class="ingredients-list">
-                    <li>200g spaghetti</li>
-                    <li>300g minced beef</li>
-                    <li>1 onion, chopped</li>
-                    <li>2 garlic cloves</li>
-                    <li>400g chopped tomatoes</li>
-                    <li>2 tbsp tomato purée</li>
-                    <li>1 tbsp olive oil</li>
-                    <li>Salt and pepper to taste</li>
-                </ul>
+
+                <?php if (empty($ingredients)): ?>
+                    <p>No ingredients available.</p>
+                <?php else: ?>
+                    <ul class="ingredients-list">
+                        <?php foreach ($ingredients as $ingredient): ?>
+                            <li>
+                                <?=
+                                    htmlspecialchars(
+                                        rtrim(rtrim((string)$ingredient['qty'], '0'), '.') .
+                                        ' ' .
+                                        trim(($ingredient['meas_met'] ?? '') . ' ' . $ingredient['ingredient'])
+                                    )
+                                ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
             </div>
 
-            <div class="recipe-panel">
+            <div class="recipe-panel" id="method">
                 <h2>Method</h2>
-                <ol class="method-list">
-                    <li>Heat the oil in a pan and cook the onion and garlic until softened.</li>
-                    <li>Add the minced beef and cook until browned.</li>
-                    <li>Stir in the chopped tomatoes and tomato purée, then simmer.</li>
-                    <li>Cook the spaghetti according to the packet instructions.</li>
-                    <li>Serve the sauce over the spaghetti and season to taste.</li>
-                </ol>
+
+                <?php if (empty($methods)): ?>
+                    <p>No method steps available.</p>
+                <?php else: ?>
+                    <ol class="method-list">
+                        <?php foreach ($methods as $step): ?>
+                            <li><?= htmlspecialchars($step['method']) ?></li>
+                        <?php endforeach; ?>
+                    </ol>
+                <?php endif; ?>
             </div>
         </section>
+
+        <?php if (!empty($tips)): ?>
+            <section class="homepage-section">
+                <div class="section-heading">
+                    <h2>Tips</h2>
+                </div>
+
+                <div class="recipe-panel">
+                    <ul class="ingredients-list">
+                        <?php foreach ($tips as $tip): ?>
+                            <li><?= htmlspecialchars($tip) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </section>
+        <?php endif; ?>
 
         <section class="homepage-section">
             <div class="section-heading">
@@ -70,23 +230,35 @@
                 <a href="search.php">View all →</a>
             </div>
 
-            <div class="related-list">
-                <article class="related-card">
-                    <div class="related-image"></div>
-                    <div class="related-content">
-                        <h3><a href="recipe.php?id=3">Healthy Pizza</a></h3>
-                        <p>Vegetarian · 30 mins · 4.3 stars</p>
-                    </div>
-                </article>
-
-                <article class="related-card">
-                    <div class="related-image"></div>
-                    <div class="related-content">
-                        <h3><a href="recipe.php?id=4">Easy Lamb Biryani</a></h3>
-                        <p>Meat · 45 mins · 4.6 stars</p>
-                    </div>
-                </article>
-            </div>
+            <?php if (empty($similarRecipes)): ?>
+                <p>No similar recipes found.</p>
+            <?php else: ?>
+                <div class="related-list">
+                    <?php foreach ($similarRecipes as $similar): ?>
+                        <article class="related-card">
+                            <div
+                                class="related-image"
+                                <?php if (!empty($similar['image_path'])): ?>
+                                    style="background-image: url('<?= htmlspecialchars($similar['image_path']) ?>'); background-size: cover; background-position: center;"
+                                <?php endif; ?>
+                            ></div>
+                            <div class="related-content">
+                                <h3>
+                                    <a href="recipe.php?id=<?= urlencode($similar['recipe_id']) ?>">
+                                        <?= htmlspecialchars($similar['recipe_name']) ?>
+                                    </a>
+                                </h3>
+                                <p>
+                                    <?= htmlspecialchars($similar['food_category']) ?>
+                                    <?php if (!empty($similar['total_time'])): ?>
+                                        · <?= (int)$similar['total_time'] ?> mins
+                                    <?php endif; ?>
+                                </p>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </section>
     </section>
 </div>
