@@ -5,16 +5,21 @@ include "../includes/db.php";
 
 //Insert PHP statements to manage the database
 $q = $_GET['q'] ?? '';
-$category = $_GET['category'] ?? '';
+$food_category = $_GET['food_category'] ?? '';
 $time = $_GET['time'] ?? '';
 $diet = $_GET['diet'] ?? '';
 $sort = $_GET['sort'] ?? 'rating';
 
-$query = "SELECT * FROM recipes WHERE 1=1";
+$query = "SELECT DISTINCT recipes.*, AVG(ratings.rating) AS avg_rating
+FROM recipes 
+LEFT JOIN diet ON recipes.recipe_id = diet.recipe_id
+LEFT JOIN ratings ON recipes.recipe_id = ratings.recipe_id
+WHERE 1=1";
+
 $params = [];
 
 if ($q !== '') {
-    $query .= " AND title LIKE :q";
+    $query .= " AND recipes.recipe_name LIKE :q";
     $params['q'] = "%$q%";
 }
 
@@ -24,9 +29,36 @@ if ($time === '30') {
     $query .= " AND total_time > 30";    
 }
 
+if($diet !== '' ){
+    $query .= " AND diet.d_val LIKE :diet";
+    $params['diet'] = "%$diet%";
+}
+
+if($food_category !== ''){
+    $query .= " AND recipes.food_category LIKE :food_category";
+    $params['food_category'] = "%$food_category%";
+}
+
+//GROUP BY to sort by avg_rating
+$query .= " GROUP BY recipes.recipe_id";
+
+switch($sort){
+    case 'time':
+        $query .= " ORDER BY recipes.cook_time ASC";
+        break;
+    case 'az':
+        $query .= " ORDER BY recipes.recipe_name ASC";
+        break;
+    default:
+        $query .= " ORDER BY avg_rating DESC";
+        break;
+}
+
+
 $stmt = $pdo->prepare($query);
 $stmt->execute($params);
 $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <div class="app-shell">
@@ -57,16 +89,17 @@ $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="filter-grid">
                     <div class="filter-group">
-                        <label for="category">Category</label>
-                        <select id="category" name="category">
+                        <label for="food_category">Category</label>
+                        <select id="food_category" name="food_category">
                             <option value="">All</option>
-                            <option value="Vegetarian">Vegetarian</option>
-                            <option value="Meat">Meat</option>
-                            <option value="Pasta">Pasta</option>
-                            <option value="Breakfast">Breakfast</option>
-                            <option value="Dessert">Dessert</option>
-                            <option value="Healthy">Healthy</option>
-                            <option value="Quick Meals">Quick Meals</option>
+                            <option value="vegetarian">Vegetarian</option>
+                            <option value="meat">Meat</option>
+                            <option value="pasta">Pasta</option>
+                            <option value="breakfast">Breakfast</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="quick-meals">Quick Meals</option>
+                            <option value="meat/vegetarian">Meat/Vegetarian</option>
+                            <option value="vegan/vegetarian"> Vegan/Vegetartian</option>
                         </select>
                     </div>
 
@@ -83,9 +116,13 @@ $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <label for="diet">Dietary Type</label>
                         <select id="diet" name="diet">
                             <option value="">All</option>
-                            <option value="Vegan">Vegan</option>
-                            <option value="Vegetarian">Vegetarian</option>
-                            <option value="Meat">Meat</option>
+                            <option value="vegan">Vegan</option>
+                            <option value="vegetarian">Vegetarian</option>
+                            <option value="meat">Meat</option>
+                            <option value="gluten free">Gluten Free</option>
+                            <option value="nut free"> Nut Free </option>
+                            <option value="pregnancy-friendly"> Pregnancy Friendly </option>
+                            <option value="healthy"> Healthy </option>
                         </select>
                     </div>
 
@@ -110,9 +147,9 @@ $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="search-results-grid">
                 <?php foreach ($recipes as $recipe): ?>
                     <?php
-                    $recipeId = $recipe['id'];
-                    $recipeTitle = $recipe['title'];
-                    $recipeMeta = $recipe['meta'];
+                    $recipeId = $recipe['recipe_id'];
+                    $recipeTitle = $recipe['recipe_name'];
+                    // $recipeMeta = $recipe['meta'];
                     $cardClass = '';
                     include __DIR__ . '/includes/recipe-card.php';
                     ?>
