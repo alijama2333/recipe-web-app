@@ -1,19 +1,26 @@
-<?php include __DIR__ . '/includes/header.php'; ?>
-
 <?php
-$favouriteRecipes = [
-    ['id' => 1, 'title' => 'Spaghetti Bolognese', 'meta' => 'Main · Meat · 35 mins · 4.5 stars'],
-    ['id' => 2, 'title' => 'Vegan Pancakes', 'meta' => 'Breakfast · Vegan · 20 mins · 4.7 stars'],
-    ['id' => 3, 'title' => 'Healthy Pizza', 'meta' => 'Main · Vegetarian · 30 mins · 4.3 stars'],
-    ['id' => 5, 'title' => 'Couscous Salad', 'meta' => 'Healthy · Vegetarian · 15 mins · 4.4 stars'],
-];
+session_start();
 
-$recommendedRecipes = [
-    ['id' => 6, 'title' => 'Mango Pie'],
-    ['id' => 4, 'title' => 'Lamb Biryani'],
-    ['id' => 8, 'title' => 'Mushroom Doner'],
-];
+require_once '../includes/db.php';
+require_once '../includes/auth.php';
+
+require_login();
+
+$stmt = $pdo->prepare("
+    SELECT r.*, AVG(rt.rating) AS avg_rating
+    FROM favourites f
+    JOIN recipes r ON f.recipe_id = r.recipe_id
+    LEFT JOIN ratings rt ON r.recipe_id = rt.recipe_id
+    WHERE f.user_id = ?
+    GROUP BY r.recipe_id
+    ORDER BY f.created_at DESC
+");
+
+$stmt->execute([current_user_id()]);
+$favouriteRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
+<?php include __DIR__ . '/includes/header.php'; ?>
 
 <div class="app-shell">
     <?php include __DIR__ . '/includes/sidebar.php'; ?>
@@ -40,36 +47,40 @@ $recommendedRecipes = [
                 <h2>Saved Recipes</h2>
             </div>
 
-            <div class="favourites-grid">
-                <?php foreach ($favouriteRecipes as $recipe): ?>
-                    <?php
-                    $recipeId = $recipe['id'];
-                    $recipeTitle = $recipe['title'];
-                    $recipeMeta = $recipe['meta'];
-                    include __DIR__ . '/includes/favourite-card.php';
-                    ?>
-                <?php endforeach; ?>
-            </div>
-        </section>
+            <?php if (empty($favouriteRecipes)): ?>
+                <p>You haven’t saved any recipes yet.</p>
+            <?php else: ?>
+                <div class="favourites-grid">
+                    <?php foreach ($favouriteRecipes as $recipe): ?>
+                        <?php
+                        $metaParts = [];
 
-        <section class="homepage-section">
-            <div class="section-heading">
-                <h2>You might also like</h2>
-                <a href="search.php">Browse more →</a>
-            </div>
+                        if (!empty($recipe['course'])) {
+                            $metaParts[] = $recipe['course'];
+                        }
 
-            <div class="popular-row">
-                <?php foreach ($recommendedRecipes as $recipe): ?>
-                    <article class="popular-card">
-                        <div class="popular-image"></div>
-                        <h3>
-                            <a href="recipe.php?id=<?= urlencode($recipe['id']) ?>">
-                                <?= htmlspecialchars($recipe['title']) ?>
-                            </a>
-                        </h3>
-                    </article>
-                <?php endforeach; ?>
-            </div>
+                        if (!empty($recipe['food_category'])) {
+                            $metaParts[] = $recipe['food_category'];
+                        }
+
+                        if (!empty($recipe['total_time'])) {
+                            $metaParts[] = $recipe['total_time'] . ' mins';
+                        }
+
+                        if (!empty($recipe['avg_rating'])) {
+                            $metaParts[] = number_format((float)$recipe['avg_rating'], 1) . '★';
+                        }
+
+                        $recipeId = $recipe['recipe_id'];
+                        $recipeTitle = $recipe['recipe_name'];
+                        $recipeImage = $recipe['image_path'] ?? '';
+                        $recipeMeta = implode(' · ', $metaParts);
+
+                        include __DIR__ . '/includes/favourite-card.php';
+                        ?>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </section>
     </section>
 </div>

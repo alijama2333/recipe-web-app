@@ -28,7 +28,7 @@ if ($rating_error) {
 
 $rating = (int)$rating;
 
-$stmt = $pdo->prepare("SELECT id FROM recipes WHERE id = ?");
+$stmt = $pdo->prepare("SELECT recipe_id FROM recipes WHERE recipe_id = ?");
 $stmt->execute([$recipe_id]);
 
 if (!$stmt->fetch()) {
@@ -44,5 +44,5 @@ $stmt = $pdo->prepare("
 ");
 $stmt->execute([current_user_id(), $recipe_id, $rating, $review]);
 
-header('Location: account.php');
+header('Location: recipe.php?id=' . $recipe_id);
 exit;

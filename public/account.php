@@ -1,9 +1,42 @@
 <?php
 session_start();
 
+require_once '../includes/db.php';
 require_once '../includes/auth.php';
 
 require_login();
+
+$userId = current_user_id();
+
+/* Count saved recipes */
+$stmt = $pdo->prepare("
+    SELECT COUNT(*) 
+    FROM favourites
+    WHERE user_id = ?
+");
+$stmt->execute([$userId]);
+$savedCount = (int)$stmt->fetchColumn();
+
+/* Count ratings given */
+$stmt = $pdo->prepare("
+    SELECT COUNT(*)
+    FROM ratings
+    WHERE user_id = ?
+");
+$stmt->execute([$userId]);
+$ratingsCount = (int)$stmt->fetchColumn();
+
+/* Recently saved recipes */
+$stmt = $pdo->prepare("
+    SELECT r.recipe_id, r.recipe_name, r.image_path
+    FROM favourites f
+    JOIN recipes r ON f.recipe_id = r.recipe_id
+    WHERE f.user_id = ?
+    ORDER BY f.created_at DESC
+    LIMIT 3
+");
+$stmt->execute([$userId]);
+$recentRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <?php include __DIR__ . '/includes/header.php'; ?>
@@ -37,11 +70,11 @@ require_login();
                 <h2>Quick Summary</h2>
                 <div class="account-stats">
                     <div class="stat-item">
-                        <span class="stat-number">4</span>
+                        <span class="stat-number"><?= $savedCount ?></span>
                         <span class="stat-label">Saved Recipes</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">3</span>
+                        <span class="stat-number"><?= $ratingsCount ?></span>
                         <span class="stat-label">Ratings Given</span>
                     </div>
                 </div>
@@ -77,22 +110,27 @@ require_login();
                 <a href="favourites.php">View all →</a>
             </div>
 
-            <div class="popular-row">
-                <article class="popular-card">
-                    <div class="popular-image"></div>
-                    <h3><a href="recipe.php?id=1">Spaghetti Bolognese</a></h3>
-                </article>
-
-                <article class="popular-card">
-                    <div class="popular-image"></div>
-                    <h3><a href="recipe.php?id=3">Healthy Pizza</a></h3>
-                </article>
-
-                <article class="popular-card">
-                    <div class="popular-image"></div>
-                    <h3><a href="recipe.php?id=5">Couscous Salad</a></h3>
-                </article>
-            </div>
+            <?php if (empty($recentRecipes)): ?>
+                <p>You haven’t saved any recipes yet.</p>
+            <?php else: ?>
+                <div class="popular-row">
+                    <?php foreach ($recentRecipes as $recipe): ?>
+                        <article class="popular-card">
+                            <div
+                                class="popular-image"
+                                <?php if (!empty($recipe['image_path'])): ?>
+                                    style="background-image: url('<?= htmlspecialchars($recipe['image_path']) ?>'); background-size: cover; background-position: center;"
+                                <?php endif; ?>
+                            ></div>
+                            <h3>
+                                <a href="recipe.php?id=<?= urlencode($recipe['recipe_id']) ?>">
+                                    <?= htmlspecialchars($recipe['recipe_name']) ?>
+                                </a>
+                            </h3>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </section>
     </section>
 </div>
