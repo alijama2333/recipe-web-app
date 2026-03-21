@@ -14,12 +14,13 @@ $query = "SELECT DISTINCT recipes.*, AVG(ratings.rating) AS avg_rating
 FROM recipes 
 LEFT JOIN diet ON recipes.recipe_id = diet.recipe_id
 LEFT JOIN ratings ON recipes.recipe_id = ratings.recipe_id
+LEFT JOIN ingredients ON recipes.recipe_id = ingredients.recipe_id
 WHERE 1=1";
 
 $params = [];
 
 if ($q !== '') {
-    $query .= " AND recipes.recipe_name LIKE :q";
+    $query .= " AND (recipes.recipe_name LIKE :q OR ingredients.ingredient LIKE :q)";
     $params['q'] = "%$q%";
 }
 
