@@ -32,10 +32,6 @@ $popularRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $categories = [
     ['label' => 'Vegetarian', 'value' => 'vegetarian', 'icon' => '🥦'],
     ['label' => 'Meat', 'value' => 'meat', 'icon' => '🍗'],
-    ['label' => 'Pasta', 'value' => 'pasta', 'icon' => '🍝'],
-    ['label' => 'Breakfast', 'value' => 'breakfast', 'icon' => '🍳'],
-    ['label' => 'Dessert', 'value' => 'dessert', 'icon' => '🍰'],
-    ['label' => 'Quick Meals', 'value' => 'quick-meals', 'icon' => '⚡'],
     ['label' => 'Vegan/Vegetarian', 'value' => 'vegan/vegetarian', 'icon' => '🥗']
 ];
 ?>
