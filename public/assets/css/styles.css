@@ -414,10 +414,16 @@ textarea {
 ========================= */
 
 .category-row {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(140px, 1fr));
-    gap: 24px;
-    justify-items: center;
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.category-row::-webkit-scrollbar {
+    display: none;
 }
 
 .category-item {
@@ -429,6 +435,9 @@ textarea {
     padding: 14px 10px;
     border-radius: 22px;
     transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    flex: 0 0 auto;
+    min-width: 120px;
+    scroll-snap-align: start;
 }
 
 .category-item:hover,
@@ -1095,12 +1104,13 @@ textarea:focus-visible {
     }
 
     .category-row {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
+        gap: 14px;
+        padding-bottom: 4px;
     }
 
     .category-item {
         padding: 10px 6px;
+        min-width: 110px;
     }
 
     .category-icon {
