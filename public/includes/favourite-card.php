@@ -20,7 +20,13 @@
         <div class="favourite-card-component-actions">
             <form method="POST" action="remove_favourite.php" style="display:inline;">
                 <input type="hidden" name="recipe_id" value="<?= (int)$recipeId ?>">
-                <button type="submit" class="secondary-button small-button">Remove</button>
+                <button
+                    type="submit"
+                    class="secondary-button small-button"
+                    onclick="return confirm('Remove this recipe from favourites?')"
+                >
+                    Remove
+                </button>
             </form>
 
             <a href="recipe.php?id=<?= urlencode($recipeId) ?>" class="text-link">View recipe</a>
