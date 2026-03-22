@@ -463,9 +463,10 @@ textarea {
 
 .category-emoji {
     display: block;
-    font-size: 38px;
+    font-size: 42px;
     line-height: 1;
     transform: translateY(1px);
+    font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
 }
 
 .category-item:hover .category-icon,
@@ -1104,13 +1105,21 @@ textarea:focus-visible {
     }
 
     .category-row {
-        gap: 14px;
-        padding-bottom: 4px;
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        scroll-snap-type: x mandatory;
+    }
+
+    .category-row::-webkit-scrollbar {
+        display: none;
     }
 
     .category-item {
+        flex: 0 0 auto;
+        scroll-snap-align: start;
         padding: 10px 6px;
-        min-width: 110px;
     }
 
     .category-icon {
