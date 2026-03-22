@@ -919,6 +919,15 @@ textarea {
     white-space: nowrap;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--accent-dark);
+    outline-offset: 3px;
+}
+
 /* =========================
    Responsive
 ========================= */
@@ -970,15 +979,25 @@ textarea {
 
     .sidebar {
         flex-direction: row;
+        align-items: center;
         justify-content: space-between;
-        padding: 14px;
+        padding: 12px 14px;
+        gap: 12px;
     }
 
     .sidebar-nav {
         flex-direction: row;
-        gap: 8px;
+        gap: 6px;
         flex-wrap: wrap;
         justify-content: flex-end;
+        align-items: center;
+    }
+
+    .sidebar-link {
+        min-width: auto;
+        min-height: 40px;
+        padding: 10px 14px;
+        font-size: 0.9rem;
     }
 
     .main-panel,
@@ -993,6 +1012,15 @@ textarea {
         font-size: 2.2rem;
     }
 
+    .section-heading {
+        align-items: flex-start;
+    }
+
+    .section-heading h2 {
+        font-size: 1.5rem;
+        line-height: 1.2;
+    }
+
     .hero-search,
     .search-page-input-row,
     .featured-grid,
@@ -1001,8 +1029,28 @@ textarea {
         grid-template-columns: 1fr;
     }
 
+    .hero-search button,
+    .search-page-input-row button {
+        width: 100%;
+        padding: 14px 20px;
+    }
+
     .category-row {
         grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .category-item {
+        padding: 10px 6px;
+    }
+
+    .category-icon {
+        width: 76px;
+        height: 76px;
+    }
+
+    .category-emoji {
+        font-size: 38px;
     }
 
     .popular-row {
