@@ -1,6 +1,6 @@
 # Recipe Web Application
 
-This project requires PHP version **>= 8.5**.
+This project requires PHP version **8.x**.
 
 ---
 
@@ -20,20 +20,38 @@ This project requires PHP version **>= 8.5**.
 
 ## Overview
 
-Web Application to manage **Users**, **Recipes**, **Ingredients**, **Diet**, **Ratings**, and **Favourites** with both a **Backend API (PHP)** and a **Frontend GUI (PHP)**.
+Web Application to manage **Users**, **Recipes**, **Ingredients**, **Diet**, **Ratings**, and **Favourites** with both a **Backend (PHP)** and a **Frontend GUI (PHP and HTML)**.
 
 ---
 
 ## Features
 
-**Database**
- - ✅ MySQL RDBMS
- - ✅ Schema for Recipes, 
+- Users:
+  - Create accounts
+  - Read user data
 
-**Backend (API)**
- - ✅ PHP **>= 8.5**
- - ✅ CRUD for Users, Favourites
- - ✅ Basic schema for Users, Favourites, Ratings
+- Recipes:
+  - Read recipes
+  - Search and filter recipes
+
+- Favourites:
+  - Add recipes to favourites
+  - View favourite recipes
+  - Remove recipes from favourites
+
+- Ratings:
+  - Add and view ratings for recipes
+
+**Database**
+ - ✅ SQL and MySQL RDBMS 
+ - ✅ Schema for Recipes
+
+**Backend**
+ - ✅ PHP version **8.x**
+ - ✅ Business rules enforced:
+      - IDs are user-provided and must be unique
+      - Cannot delete Client/Airline if it has today/future flights
+      - Flights list shows only today & future, sorted by date
 
 **Frontend (GUI)**
 - ✅ Implemented with PHP
@@ -50,22 +68,6 @@ Web Application to manage **Users**, **Recipes**, **Ingredients**, **Diet**, **R
 ---
 
 ## Quick Start
-
-
-
-- **macOS/Linux**
-
-
-
-- **Windows (PowerShell)**
-
-
-- **Run from VS Code**
-
- 
----
-
-2. Run the Frontend (GUI)
 
 
 ---
@@ -90,8 +92,6 @@ This project is hosted on GitHub:
 
 
 ---
-
-
 
 
 
