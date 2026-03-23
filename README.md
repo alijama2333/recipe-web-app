@@ -1,6 +1,6 @@
 # Recipe Web Application
 
-This project requires PHP version **>= 8.0**.
+This project requires PHP version **8.x**.
 
 ---
 
@@ -20,42 +20,27 @@ This project requires PHP version **>= 8.0**.
 
 ## Overview
 
-This is a web application that manages **Users**, **Recipes**, **Ingredients**, **Dietary Information**, **Ratings**, and **Favourites**.
-
-The system consists of:
-
-- a **backend** implemented in PHP using MySQL  
-- a **frontend GUI** built with PHP and HTML  
-
-The application allows users to search, filter, and interact with recipes using:
-- ingredients  
-- dietary requirements  
-- category  
-- cooking time  
-- ratings  
-
-The project includes a **full SQL database dump** for easy setup and reproducibility.
+Web Application to manage **Users**, **Recipes**, **Ingredients**, **Diet**, **Ratings**, and **Favourites** with both a **Backend (PHP)** and a **Frontend GUI (PHP and HTML)**.
 
 ---
 
 ## Features
 
-### Users
-- Create accounts  
-- View user data  
+- Users:
+  - Create accounts
+  - Read user data
 
-### Recipes
-- View recipes  
-- Search and filter recipes  
+- Recipes:
+  - Read recipes
+  - Search and filter recipes
 
-### Favourites
-- Add recipes to favourites  
-- View favourite recipes  
-- Remove recipes from favourites  
+- Favourites:
+  - Add recipes to favourites
+  - View favourite recipes
+  - Remove recipes from favourites
 
-### Ratings
-- Add ratings  
-- View ratings for recipes  
+- Ratings:
+  - Add and view ratings for recipes
 
 ---
 
@@ -95,7 +80,6 @@ The project includes a **full SQL database dump** for easy setup and reproducibi
 - PHP >= 8.0  
 - MySQL / MariaDB  
 - Apache server (e.g. XAMPP)  
-- Web browser  
 
 ---
 
@@ -139,7 +123,7 @@ This will:
 
 - create all tables  
 - apply constraints  
-- insert sample data  
+- insert sample data
 
 ---
 
@@ -174,4 +158,4 @@ This will:
 
 ## Data Models
 
-![alt text](image.png)
+![alt text](data_model.png)
