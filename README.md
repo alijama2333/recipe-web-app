@@ -14,7 +14,6 @@ This project requires PHP version **8.x**.
 6. [Project Structure](#project-structure)  
 7. [Data Models](#data-models)  
 8. [Testing](#testing)  
-9. [Frontend Details](#frontend-details)  
 
 ---
 
@@ -64,22 +63,23 @@ Web Application to manage **Users**, **Recipes**, **Ingredients**, **Diet**, **R
 - Server-rendered pages combining backend logic and frontend output  
 - Pages include:
   - Home  
-  - Search  
+  - Search
+  - Recipe
+  - Rate Recipe
   - Account  
   - Favourites  
   - Register  
-  - Login  
-  - Logout  
+  - Login
 - Built using Figma prototype:  
-  https://www.figma.com/proto/VvxTSrUMR9tRrcQOlN5tRj/CSCK543---Group-Project?node-id=0-1&t=A1CvBkIpVisALOvu-1  
+  `https://www.figma.com/proto/VvxTSrUMR9tRrcQOlN5tRj/CSCK543---Group-Project?node-id=0-1&t=A1CvBkIpVisALOvu-1` 
 
 ---
 
 ## Requirements
 
-- PHP >= 8.0  
-- MySQL / MariaDB  
-- Apache server (e.g. XAMPP)  
+- PHP **8.x** 
+- MySQL 
+- Apache server (XAMPP)  
 
 ---
 
@@ -99,7 +99,7 @@ C:\xampp\htdocs\
 
 6. Open the application:
 
-  http://localhost/recipe-web-app/public/
+  `http://localhost/recipe-web-app/public/`
 
 
 ---
@@ -119,8 +119,7 @@ To initialise the database:
 
 This will:
 
-- create all tables  
-- apply constraints  
+- create all tables 
 - insert sample data
 
 ---
@@ -154,6 +153,7 @@ recipe-web-app/
 │   └── scripts/create_recipe_tables_last_2300.php
 │
 └── README.md
+````
 
 ## Data Models
 
@@ -229,5 +229,21 @@ recipe-web-app/
 - `user_id`
 - `recipe_id`
 - `created_at`
+
+## Testing
+
+  **Manual UAT (User Acceptance Testing)**
+
+  - Open `http://localhost/recipe-web-app/public/` in a browser.
+
+  - Run through:
+    - Creating a user account and navigating to user account page
+    - Searching and filtering recipes
+    - Adding recipes to favourites
+    - Viewing favourite recipes in account page
+    - Removing recipes from favourites
+    - Adding and viewing ratings for recipes
+
+---
 
 
