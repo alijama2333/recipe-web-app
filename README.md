@@ -126,36 +126,107 @@ This will:
 ---
 
 ## Project Structure
-  recipe-web-app/
-  │
-  ├── public/
-  │   ├── index.php
-  │   ├── search.php
-  │   ├── recipe.php
-  │   ├── account.php
-  │   ├── favourites.php
-  │   ├── login.php
-  │   ├── logout.php
-  │   ├── rate_recipe.php
-  │   ├── register.php
-  │   ├── remove_favourite.php
-  │   ├── save_favourite.php
-  │
-  ├── includes/
-  │   ├── db.php
-  │   ├── auth.php
-  │   ├── validation.php
-  │
-  ├── database/
-  │   └── schema.sql
-  │
-  ├── scripts/
-  │   └── scripts/create_recipe_tables_last_2300.php
-  │
-  └── README.md
+recipe-web-app/
+│
+├── public/
+│   ├── index.php
+│   ├── search.php
+│   ├── recipe.php
+│   ├── account.php
+│   ├── favourites.php
+│   ├── login.php
+│   ├── logout.php
+│   ├── rate_recipe.php
+│   ├── register.php
+│   ├── remove_favourite.php
+│   ├── save_favourite.php
+│
+├── includes/
+│   ├── db.php
+│   ├── auth.php
+│   ├── validation.php
+│
+├── database/
+│   └── schema.sql
+│
+├── scripts/
+│   └── scripts/create_recipe_tables_last_2300.php
+│
+└── README.md
 
 ## Data Models
 
-<img width="834" height="736" alt="Screenshot 2026-03-23 at 1 40 48 AM" src="https://github.com/user-attachments/assets/b0acaf58-30ab-4ae8-a040-52c32f09ef6b" />
+#### `recipes`
+
+- `recipe_id`
+- `recipe_name`
+- `course`
+- `food_category`
+- `prep_time`
+- `cook_time`
+- `total_time`
+- `serves`
+- `image_path`
+- `author`
+- `date_added`
+- `date_updated`
+
+#### `ingredients`
+
+- `ingredient_id`
+- `recipe_id`
+- `ingredient`
+- `qty`
+- `measurement_id`
+
+#### `measurements`
+
+- `measurement_id`
+- `meas_met`
+- `meas_imp`
+
+#### `methods`
+- `method_id`
+- `recipe_id`
+- `step`
+- `method`
+
+#### `diet`
+
+- `diet_id`
+- `recipe_id`
+- `d_val`
+
+#### `tips`
+
+- `tip_id`
+- `recipe_id`
+- `tip_text`
+
+
+#### `users`
+
+- `id`
+- `name`
+- `email`
+- `password_hash`
+- `created_at`
+
+#### `ratings`
+
+- `id`
+- `user_id`
+- `recipe_id`
+- `rating`
+- `review`
+- `created_at`
+
+
+#### `favourites`
+
+- `id`
+- `user_id`
+- `recipe_id`
+- `created_at`
 
 
