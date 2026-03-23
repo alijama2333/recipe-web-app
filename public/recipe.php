@@ -105,10 +105,6 @@ if (!empty($recipe['total_time'])) {
     $metaParts[] = $recipe['total_time'] . ' mins total';
 }
 
-if (!empty($recipe['avg_rating'])) {
-    $metaParts[] = number_format((float)$recipe['avg_rating'], 1) . '★';
-}
-
 $recipeMeta = implode(' · ', $metaParts);
 ?>
 
@@ -142,7 +138,17 @@ $recipeMeta = implode(' · ', $metaParts);
             ></div>
 
             <div class="recipe-hero-content">
-                <h1><?= htmlspecialchars($recipe['recipe_name']) ?></h1>
+               <h1><?= htmlspecialchars($recipe['recipe_name']) ?></h1>
+
+                <?php if ($recipe['avg_rating'] !== null): ?>
+                    <p class="recipe-rating">
+                        ⭐ <?= number_format((float)$recipe['avg_rating'], 1) ?> / 5
+                    </p>
+                <?php else: ?>
+                    <p class="recipe-rating muted">
+                        No ratings yet
+                    </p>
+                <?php endif; ?>
 
                 <p class="recipe-meta-line"><?= htmlspecialchars($recipeMeta) ?></p>
 
@@ -223,6 +229,31 @@ $recipeMeta = implode(' · ', $metaParts);
                 </div>
             </section>
         <?php endif; ?>
+
+        <?php if (is_logged_in()): ?>
+    <section class="recipe-panel">
+        <h2>Rate this recipe</h2>
+
+        <form method="POST" action="rate_recipe.php" class="rating-form">
+            <input type="hidden" name="recipe_id" value="<?= (int)$recipeId ?>">
+
+            <label for="rating">Your rating</label>
+            <select name="rating" id="rating" required>
+                <option value="">Select rating</option>
+                <option value="5">5 - Excellent</option>
+                <option value="4">4 - Good</option>
+                <option value="3">3 - Okay</option>
+                <option value="2">2 - Poor</option>
+                <option value="1">1 - Bad</option>
+            </select>
+
+            <label for="review">Optional review</label>
+            <textarea name="review" id="review" rows="3" placeholder="Write a short review..."></textarea>
+
+            <button type="submit" class="primary-button">Submit rating</button>
+        </form>
+    </section>
+<?php endif; ?>
 
         <section class="homepage-section">
             <div class="section-heading">
