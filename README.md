@@ -93,9 +93,7 @@ C:\xampp\htdocs\
 3. Start Apache and MySQL using XAMPP  
 
 4. Create the database:
-
-  ```sql
-  CREATE DATABASE recipe_app;
+    CREATE DATABASE recipe_app;
 
 5. Import the SQL dump
 
@@ -158,4 +156,5 @@ This will:
 
 ## Data Models
 
-![alt text](data_model.png)
+![alt text](<img width="834" height="736" alt="Screenshot 2026-03-23 at 1 40 48 AM" src="https://github.com/user-attachments/assets/db808b6f-7092-444e-9853-4d4a22adeda7" />)
+
