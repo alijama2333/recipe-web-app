@@ -156,5 +156,6 @@ This will:
 
 ## Data Models
 
-![alt text](<img width="834" height="736" alt="Screenshot 2026-03-23 at 1 40 48 AM" src="https://github.com/user-attachments/assets/db808b6f-7092-444e-9853-4d4a22adeda7" />)
+<img width="834" height="736" alt="Screenshot 2026-03-23 at 1 40 48 AM" src="https://github.com/user-attachments/assets/b0acaf58-30ab-4ae8-a040-52c32f09ef6b" />
+
 
